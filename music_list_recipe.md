@@ -1,45 +1,78 @@
-{{PROBLEM}} Class Design Recipe
+Music List Class Design Recipe
 1. Describe the Problem
-Put or write the user story here. Add any clarifying notes you might have.
+
+As a user
+So that I can keep track of my music listening
+I want to add tracks I've listened to and see a list of them.
+
 
 2. Design the Class Interface
-Include the initializer and public methods with all parameters and return values.
 
-# EXAMPLE
+```ruby
+class MusicList
 
-class Reminder
-  def initialize(name) # name is a string
-    # ...
-  end
-
-  def remind_me_to(task) # task is a string
-    # No return value
-  end
-
-  def remind()
-    # Throws an exception if no task is set
-    # Otherwise, returns a string reminding the user to do the task
-  end
+def initialize
+  # initializes an empty array of songs to be pushed 
 end
+
+def add(song) #song is a string
+  #adds songs 
+end
+
+def my_list
+  #returns list of my songs
+
+end
+end
+
+```
+
 3. Create Examples as Tests
 Make a list of examples of how the class will behave in different situations.
 
-# EXAMPLE
+```ruby
+#1
 
-# 1
-reminder = Reminder("Kay")
-reminder.remind_me_to("Walk the dog")
-reminder.remind() # => "Walk the dog, Kay!"
+#check for the class first
 
-# 2
-reminder = Reminder("Kay")
-reminder.remind() # fails with "No task set."
+music_list = MusicList.new
+expect(music_list).to be_kind_of(MusicList)
 
-# 3
-reminder = Reminder("Kay")
-reminder.remind_me_to("")
-reminder.remind() # => ", Kay!"
-Encode each example as a test. You can add to the above list as you go.
+#2
+#add song
+
+music_list = MusicList.new
+music_list.add('Jungle')
+expect(music_list.my_list).to eq ('Jungle')
+
+
+#3
+#add another song
+
+music_list = MusicList.new
+music_list.add('Jungle')
+music_list.add('Blackbird')
+expect(music_list.my_list).to eq ('Jungle, Blackbird')
+
+
+#4
+#if song already exists do nothing 
+
+music_list = MusicList.new
+music_list.add('Jungle')
+music_list.add('Blackbird')
+music_list.add('Blackbird')
+expect(music_list.my_list).to eq ('Jungle, Blackbird')
+
+#5
+
+#return error message when no songs in my_list
+
+music_list = MusicList.new
+expect { music_list.my_list}.to raise_error "There are no songs in your list. Add some!"
+
+
+```
 
 4. Implement the Behaviour
 After each test you write, follow the test-driving process of red, green, refactor to implement the behaviour.
